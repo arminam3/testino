@@ -1,0 +1,155 @@
+{% extends "_base.html" %}
+{% load static %}
+{% load my_tags %}
+
+{% block head %}
+  	<!-- FAVICONS ICON -->
+	<link rel="shortcut icon" type="image/png" href="images/favicon.png" />
+    <!-- <link rel="stylesheet" href="{% static './vendor/select2/css/select2.min.css' %}"> -->
+	<!-- <link href="{% static './vendor/jquery-nice-select/css/nice-select.css' %}" rel="stylesheet"> -->
+    <link href="{% static './css/style.css' %}" rel="stylesheet">
+    <link href="{% static './css/custumize.css' %}" rel="stylesheet">
+
+{% endblock head %}
+
+{% block title %}
+  <title>ارسال پیام</title>
+{% endblock title %}
+
+{% block content %}
+          <!--**********************************
+            Content body start
+        ***********************************-->
+        <div class="content-body farsi" dir="rtl">
+            <div class="container-fluid">
+				
+                <div class="row page-titles">
+                    <ol class="breadcrumb" dir="rtl" style="text-align: right;">
+                        <li class="breadcrumb-item text-primary"><a href="" class="text-primary">{{user.get_full_name}}</a></li>
+                        <li class=""><a href="">
+                            <span class="text-primary">&nbsp; / </span>
+                             ارسال پیام
+                             </a></li>
+                        <!-- <li class="breadcrumb-item"><a href=""></a></li> -->
+                        <!-- <li class=""><a href="">طراح سوالات : {{quiz.quiz_maker}}</a></li> -->
+                    </ol>
+                </div>
+				
+
+                <div class="col-xl-12 col-lg-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title farsi">ایجاد سوال</h4>
+                        </div>
+                        <div class="card-body">
+                                <div class="basic-form">
+                                    <form  action="{% url 'notification_create' %}" enctype="multipart/form-data" method="POST">
+                                        {% csrf_token %}
+                                        <div class="mb-1 row">
+                                            <label class="col-sm-2 col-form-label text-primary" style="font-size: medium;">
+                                                <b>عنوان :</b>
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" placeholder="عنوان : این متن به کاربر نشان داده می شود" required name="title">
+                                            </div>
+                                        </div>
+                                <div class="mb-3 row" dir="rtl" >
+                                    <label class="col-lg-2 col-form-label text-primary active" for="validationCustom04" style="font-size: larger; font-weight: bold;">متن پیام : 
+                                    </label>
+                                    <div class="col-lg-8">
+                                        <textarea class="form-control" id="validationCustom04" rows="5" name="text" placeholder="افزودن توضیحات" >
+                                        </textarea>
+                                    </div>
+                                </div>
+                                <div class="mb-3 row" dir="rtl" >
+                                    <div class="col-lg-2 col-form-label">
+                                        <label class="col-lg-12 col-form-label text-primary active" for="validationCustom04" style="font-size: larger; font-weight: bold;">انتخاب دریافت کننده: 
+                                        </label>
+                                    </div>
+                                    <div class="col-lg-2 col-form-label">
+                                        <input type="text" id="search_user" class="form-control" placeholder="دریافت کنندگان را انتخاب کنید">
+                                        <!-- <input type="text"  placeholder="Search users..."> -->
+                                    </div>
+                                    <div class="col-lg-8" id="userList"></div>
+                                    <hr>
+                                    <div class="col-lg-4"> 
+                                        <label class="col-lg-6 col-form-label text-primary active" for="validationCustom04" style="font-size: larger; font-weight: bold;">دریافت کنندگان : 
+                                        </label>
+                                    </div>
+                                    <div class="col-lg-8" id="receptor">
+                                        
+                                    </div>        
+                                </div>                 
+                                <div class="mb-3 " dir="rtl" >
+                                </div>      
+                                <div class="mb-3 row" style="float: right;" dir="ltr">
+                                    <div class="col-sm-10">
+                                        <button type="submit" class="btn btn-primary ">ارسال</button>
+                                    </div>
+                                </div>
+                                </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--**********************************
+            Content body end
+        ***********************************-->
+{% endblock content %}
+
+{% block required_js %}
+    <script src="{% static './vendor/global/global.min.js' %}"></script>
+    <script src="{% static 'vendor/jquery-nice-select/js/jquery.nice-select.min.js' %}"></script>
+
+    <script src="{% static './js/custom.js' %}"></script>
+    <script src="{% static './js/dlabnav-init.js' %}"></script>
+    <script src="{% static './js/demo.js' %}"></script>
+    <script src="{% static './js/styleSwitcher.js' %}"></script>
+    <script>
+        
+        const searchInput = document.getElementById('search_user');
+        const userList = document.getElementById('userList');
+        const receptor = document.getElementById('receptor');
+        var n = 1
+        searchInput.addEventListener('input', function() {
+            fetch(`/search-users/?query=${searchInput.value}`)
+                .then(response => response.json())
+                .then(data => {
+                    userList.innerHTML = '';
+                    data.forEach(user => {
+                        const div = document.createElement('div');
+                        div.classList.add('btn', 'table-primary', 'col-lg-2');
+                        div.style.margin = '1em';
+                        div.setAttribute('type', `button`);
+                        div.setAttribute('onclick', `add_user('${user.username}')`);    
+                        div.innerHTML = user.username;
+                        userList.appendChild(div);
+                    });
+                });
+            });
+
+        function add_user(username) {
+            const receptor_div = document.createElement('input');
+            receptor_div.classList.add('btn', 'table-success', 'col-lg-2');
+            receptor_div.setAttribute('id', `user-${n}`);
+            receptor_div.setAttribute('name', `user-${n}`);
+            receptor_div.setAttribute('type', `input`);
+            receptor_div.setAttribute('value', username);
+            receptor_div.setAttribute('onclick', `remove_user('user-${n}')`);
+            receptor_div.style.margin = '1em';
+            receptor_div.innerHTML = username;
+            receptor.appendChild(receptor_div);
+            n++
+        }
+        function remove_user(name){
+            var delete_user = document.getElementById(name);
+            delete_user.remove();
+        }
+    </script>
+    
+
+{% endblock required_js %}

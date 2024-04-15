@@ -1,0 +1,172 @@
+{% extends "_base.html" %}
+{% load static %}
+{% load my_tags %}
+
+	
+	{% block title %}
+	<!-- PAGE TITLE HERE -->
+	<title>Question List</title>
+	{% endblock title %}
+	
+
+	{% block head %}
+	<link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.png' %}" />
+
+	<!-- FAVICONS ICON -->
+	<link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.png' %}" />
+    <!-- Form step -->
+    <link href="{% static './vendor/jquery-smartwizard/dist/css/smart_wizard.min.css' %}" rel="stylesheet">
+    <!-- Custom Stylesheet -->
+	<link href="{% static './vendor/jquery-nice-select/css/nice-select.css' %}" rel="stylesheet">
+    <link href="{% static './css/style.css' %}" rel="stylesheet">
+    <link href="{% static './css/custumize.css' %}" rel="stylesheet">
+
+	{% endblock head %}
+
+
+    <!--**********************************
+        Main wrapper start
+    ***********************************-->
+    <div id="main-wrapper">
+                    
+
+    {% block content %}
+        <!--**********************************
+            Content body start
+        ***********************************-->
+        <div class="content-body">
+            <div class="container-fluid " dir="rtl">
+				<div class="row page-titles">
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item active"><a href="javascript:void(0)">Home</a></li>
+						<li class="breadcrumb-item"><a href="javascript:void(0)">Components</a></li>
+					</ol>
+                </div>
+               
+
+				<!-- *****************************
+					radi button start
+				***************************** -->
+				<!-- <form class="farsi"> -->
+					<!-- <form class="farsi" method="POST" data-netlify="true"
+						 enctype="multipart/form-data" action=""> -->
+						<div class="row farsi">
+						{% for question in questions %}		
+							{% csrf_token %}
+							<div class="col-xl-6 col-lg-6" >
+									<div class="card" dir="">
+										<div class="card-header  " >
+                                            <a href="" class="badge card-num-cus badge-primary">
+                                            <b>{{forloop.counter|e2fnum}}</b>
+                                            </a> 
+											<h4 class="card-title col-11 card-title-cus" style="font-size: medium;">
+												{{question.text}}</h4>
+											
+										</div>
+										<div class="card-body">
+											<div class="basic-form">
+													<div class="row">
+														<div class="col-xl-4 col-xxl-12 col-12">
+															<div class="form-check  form-check-cus custom-checkbox mb-0 checkbox-info ">
+																<!-- <div class="row"> -->
+																	<!-- <input  type="text" value="" class="form-check-input form-check-input-cus" id="customRadioBox3" name="optradioCustom"> -->
+																	<span class="form-check-input   left-forced-cus" > ۱ ) </span>
+																	<label class="form-check-label form-check-label-cus" for="customRadioBox3" > {{question.choice_1}}</label>
+																<!-- </div> -->
+															</div>
+														</div>
+														<div class="col-xl-4 col-xxl-12 col-12">
+															<div class="form-check  form-check-cus custom-checkbox mb-0 checkbox-info ">
+																<!-- <input  type="radio" class="form-check-input form-check-input-cus" id="customRadioBox3" name="optradioCustom"> -->
+																<span class="form-check-input   left-forced-cus" > ۲ ) </span>
+																<label class="form-check-label form-check-label-cus " for="customRadioBox3" >{{question.choice_2}}</label>
+															</div>
+														</div>
+														<div class="col-xl-4 col-xxl-12 col-12">
+															<div class="form-check  form-check-cus custom-checkbox mb-0 checkbox-info ">
+																<!-- <input  type="radio" class="form-check-input form-check-input-cus" id="customRadioBox3" name="optradioCustom"> -->
+																<span class="form-check-input   left-forced-cus" > ۳ ) </span>
+																<label class="form-check-label form-check-label-cus " for="customRadioBox3" >{{question.choice_3}}</label>
+															</div>
+														</div>
+														<div class="col-xl-4 col-xxl-12 col-12">
+															<div class="form-check  form-check-cus custom-checkbox mb-0 checkbox-info ">
+																<!-- <input  type="radio" class="form-check-input form-check-input-cus" id="customRadioBox3" name="optradioCustom"> -->
+																<span class="form-check-input   left-forced-cus" > ۴ ) </span>
+																<label class="form-check-label form-check-label-cus " for="customRadioBox3" >{{question.choice_4}}</label>
+															</div>
+														</div>
+													</div>
+											</div>
+											<!-- </form> -->
+										</div>
+									</div>
+							</div>
+						{% endfor %}
+					</div>
+					<!-- <div class="row">
+						<div class="col-xl-4 col-lg-4"></div>
+						<div class="col-xl-4 col-lg-4">
+							<div class="card " dir="rtl">
+								<button type="submit" class="btn btn-success" >ذخیره</button>
+							</div>
+						</div>	
+						<div class="col-xl-4 col-lg-4"></div>
+						</div>
+					</div> -->
+					<!-- </form> -->
+				<!-- *****************************
+					radi button end
+				***************************** -->
+        </div>
+	</div>
+		
+        <!--**********************************
+            Content body end
+        ***********************************-->
+    {% endblock content %}
+
+
+
+
+        
+    </div>
+    <!--**********************************
+        Main wrapper end
+    ***********************************-->
+
+	
+    
+    <!--**********************************
+        Scripts
+        ***********************************-->
+	{% block required_js %}
+	<!-- {{ block.super }} -->
+        <!-- Required vendors -->
+	<script src="{% static './vendor/global/global.min.js' %}"></script>
+		<!--  -->
+	<script src="{% static './vendor/jquery-steps/build/jquery.steps.min.js' %}"></script>
+    <script src="{% static './vendor/jquery-validation/jquery.validate.min.js' %}"></script>
+    <!-- Form validate init -->
+    <script src="{% static './js/plugins-init/jquery.validate-init.js' %}"></script>
+
+
+	<!-- Form Steps -->
+	<script src="{% static './vendor/jquery-smartwizard/dist/js/jquery.smartWizard.js' %}"></script>
+	<script src="{% static 'vendor/jquery-nice-select/js/jquery.nice-select.min.js' %}"></script>
+	
+	<script src="{% static './js/custom.js' %}"></script>
+	<script src="{% static './js/dlabnav-init.js' %}"></script>
+	<script src="{% static './js/demo.js' %}"></script>
+    <script src="{% static './js/styleSwitcher.js' %}"></script>
+	<script>
+        $(document).ready(function(){
+            // SmartWizard initialize
+			$('#smartwizard').smartWizard(); 
+		});
+	</script>
+    {% endblock required_js %}
+
+
+
+</html>

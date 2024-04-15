@@ -1,0 +1,309 @@
+{% extends "_base.html" %}
+{% load static %}
+{% load my_tags %}
+
+
+{% block title %}
+  <title>question create</title>
+{% endblock title %}
+
+
+{% block head %}
+<link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.png' %}" />
+
+<!-- FAVICONS ICON -->
+<link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.png' %}" />
+<!-- Form step -->
+<link href="{% static './vendor/jquery-smartwizard/dist/css/smart_wizard.min.css' %}" rel="stylesheet">
+<!-- Custom Stylesheet -->
+<link href="{% static './vendor/jquery-nice-select/css/nice-select.css' %}" rel="stylesheet">
+<link href="{% static './css/style.css' %}" rel="stylesheet">
+<link href="{% static './css/custumize.css' %}" rel="stylesheet">
+{% endblock head %}
+
+
+{% block content %}
+
+<div class="content-body">
+    <div class="container-fluid farsi" dir="rtl">
+        <div class="row" >
+            <div class="col-xl-12 col-lg-12">
+                <form  action="{% url 'quiz_question_create' quiz_pk %}" enctype="multipart/form-data" 
+                        method="POST" >
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">ایجاد سوال</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="basic-form">
+                                {% csrf_token %}
+                                <div class="mb-1 row">
+                                    <label class="col-sm-2 col-form-label text-primary" style="font-size: medium;">
+                                        <b>متن سوال</b>
+                                    </label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" placeholder="متن سوال را اضافه کنید" required name="text-0">
+                                    </div>
+                                </div>
+                                <div class="mb-1 row">
+                                    <label class="col-sm-2 col-form-label">گزینه اول </label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" name="choice_1-0" required>
+                                    </div>
+                                </div>
+                                <div class="mb-1 row">
+                                    <label class="col-sm-2 col-form-label">گزینه دوم</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" name="choice_2-0" required>
+                                    </div>
+                                </div>
+                                <div class="mb-1 row">
+                                    <label class="col-sm-2 col-form-label">گزینه سوم</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" name="choice_3-0" required>
+                                    </div>
+                                </div>
+                                <div class="mb-1 row">
+                                    <label class="col-sm-2 col-form-label">گزینه چهارم</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" name="choice_4-0" required>
+                                    </div>
+                                </div>
+
+                                <fieldset class="mb-3">
+                                    <div class="row">
+                                        <label class="col-form-label col-sm-2 pt-0 text-primary" style="font-size: large;"><b>پاسخ</b></label>
+                                        <div class="col-sm-10">
+                                            <div class="col-sm-3">
+                                                <div class="form-check">
+                                                    <input class="form-check-input rtl-choice-cus" type="radio" name="answer-0" value="1"  required>
+                                                    <label class="form-check-label">
+                                                        {{1|e2fnum}}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="form-check">
+                                                    <input class="form-check-input rtl-choice-cus" type="radio" name="answer-0" value="2"  required>
+                                                    <label class="form-check-label">
+                                                        {{2|e2fnum}}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="form-check">
+                                                    <input class="form-check-input rtl-choice-cus" type="radio" name="answer-0" value="3"  required>
+                                                    <label class="form-check-label">
+                                                        {{3|e2fnum}}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="form-check">
+                                                    <input class="form-check-input rtl-choice-cus" type="radio" name="answer-0" value="4"  required>
+                                                    <label class="form-check-label">
+                                                        {{4|e2fnum}}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <label class="col-form-label col-sm-3 pt-0 farsi">تصویر</label>
+                                        <div class="col-sm-9">
+                                            <div class="input-group custom_file_input">
+                                                <div class="form-file">
+                                                    <input type="file" class="form-file-input form-control" name="image-0">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <div class="mb-3 row">
+                                    <label class="col-lg-4 col-form-label farsi" for="validationCustom04">توضیحات 
+                                        <!-- <span class="text-danger">*</span> -->
+                                    </label>
+                                    <div class="col-lg-8">
+                                        <textarea class="form-control" id="validationCustom04" rows="5" name="explanation-0" placeholder="افزودن توضیحات" >
+                                        </textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="formContainer-cus"></div>
+                    <div class="mb-3 row " >
+                        <div class="col-sm-3 card"></div>
+                        <div class="col-sm-3 card" style="background: none;">
+                            <button type="submit" class="btn btn-primary ">ثبت سوال</button>
+                            </div>
+                        <div class="col-sm-3 card" style="background: none;">
+                            <button type="button" class="btn btn-info" onclick="createForm()" id="btn-form-creator">افزودن فرم سوال</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+        
+{% endblock content %}
+
+
+{% block required_js %}
+<script src="{% static './vendor/global/global.min.js' %}"></script>
+<script src="{% static './vendor/jquery-steps/build/jquery.steps.min.js' %}"></script>
+<script src="{% static './vendor/jquery-validation/jquery.validate.min.js' %}"></script>
+<!-- Form validate init -->
+<script src="{% static './js/plugins-init/jquery.validate-init.js' %}"></script>
+
+<!-- form creator -->
+<script src="{% static './custom/js/formcreator.js' %}"></script>
+
+
+<!-- Form Steps -->
+<script src="{% static './vendor/jquery-smartwizard/dist/js/jquery.smartWizard.js' %}"></script>
+<script src="{% static 'vendor/jquery-nice-select/js/jquery.nice-select.min.js' %}"></script>
+
+<script src="{% static './js/custom.js' %}"></script>
+<script src="{% static './js/dlabnav-init.js' %}"></script>
+<script src="{% static './js/demo.js' %}"></script>
+<script src="{% static './js/styleSwitcher.js' %}"></script>
+<script>
+$(document).ready(function(){
+    // SmartWizard initialize
+    $('#smartwizard').smartWizard(); 
+});
+</script>
+<script>
+   
+
+
+    number = 0
+    count = 1
+    function createForm() {
+    number ++
+    count ++
+    
+    const formContainer = document.getElementById('formContainer-cus');
+    const form = document.createElement('div');
+    
+    
+    // Add form elements (e.g., input fields, labels) dynamically here
+    form.innerHTML = `
+
+    <div class="card" >
+                    <div class="card-header">
+                        <h4 class="card-title" id="wanted">${count}  ) سوال</h4>
+                    </div>
+                    <div class="card-body" >
+                        <div class="basic-form">
+                                {% csrf_token %}
+                                <div class="mb-1 row">
+                                    <label class="col-sm-2 col-form-label text-primary" style="font-size: medium;">
+                                        <b>متن سوال</b>
+                                    </label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" placeholder="متن سوال را اضافه کنید" required name="text-${number}">
+                                    </div>
+                                </div>
+                                <div class="mb-1 row">
+                                    <label class="col-sm-2 col-form-label">گزینه اول </label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" name="choice_1-${number}" required>
+                                    </div>
+                                </div>
+                                <div class="mb-1 row">
+                                    <label class="col-sm-2 col-form-label">گزینه دوم</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" name="choice_2-${number}" required>
+                                    </div>
+                                </div>
+                                <div class="mb-1 row">
+                                    <label class="col-sm-2 col-form-label">گزینه سوم</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" name="choice_3-${number}" required>
+                                    </div>
+                                </div>
+                                <div class="mb-1 row">
+                                    <label class="col-sm-2 col-form-label">گزینه چهارم</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" name="choice_4-${number}" required>
+                                    </div>
+                                </div>
+
+                                <fieldset class="mb-3">
+                                    <div class="row">
+                                        <label class="col-form-label col-sm-2 pt-0 text-primary" style="font-size: large;"><b>پاسخ</b></label>
+                                        <div class="col-sm-10">
+                                            <div class="col-sm-3">
+                                                <div class="form-check">
+                                                    <input class="form-check-input rtl-choice-cus" type="radio" name="answer-${number}" value="1"  required>
+                                                    <label class="form-check-label">
+                                                        {{1|e2fnum}}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="form-check">
+                                                    <input class="form-check-input rtl-choice-cus" type="radio" name="answer-${number}" value="2"  required>
+                                                    <label class="form-check-label">
+                                                        {{2|e2fnum}}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="form-check">
+                                                    <input class="form-check-input rtl-choice-cus" type="radio" name="answer-${number}" value="3"  required>
+                                                    <label class="form-check-label">
+                                                        {{3|e2fnum}}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="form-check">
+                                                    <input class="form-check-input rtl-choice-cus" type="radio" name="answer-${number}" value="4"  required>
+                                                    <label class="form-check-label">
+                                                        {{4|e2fnum}}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <label class="col-form-label col-sm-3 pt-0 farsi">تصویر</label>
+                                        <div class="col-sm-9">
+                                            <div class="input-group custom_file_input">
+                                                <div class="form-file">
+                                                    <input type="file" class="form-file-input form-control" name="image-${number}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <div class="mb-3 row">
+                                    <label class="col-lg-4 col-form-label farsi" for="validationCustom04">توضیحات 
+                                        <!-- <span class="text-danger">*</span> -->
+                                    </label>
+                                    <div class="col-lg-8">
+                                        <textarea class="form-control" id="validationCustom04" rows="5" name="explanation-${number}" placeholder="افزودن توضیحات" >
+                                        </textarea>
+                                    </div>
+                                </div>
+                                                          
+                            </div>
+                        </div>
+                    </div>
+
+                
+    `;
+    
+    formContainer.appendChild(form);
+  }
+</script>
+{% endblock required_js %}
+
+
+
+

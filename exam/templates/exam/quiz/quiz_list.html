@@ -1,0 +1,183 @@
+{% extends "_base.html" %}
+
+{% load static %}
+{% load jformat %}
+	
+	<!-- PAGE TITLE HERE -->
+	{% block title %}
+      <title>QuizList</title>
+    {% endblock title %}
+	
+    {% block head %}
+        <!-- FAVICONS ICON -->
+        <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.png' %}" />
+        <!-- Datatable -->
+        <link href='{% static "./vendor/datatables/css/jquery.dataTables.min.css" %}' rel="stylesheet">
+        <!-- Custom Stylesheet -->
+        <link href='{% static "./vendor/jquery-nice-select/css/nice-select.css" %}' rel="stylesheet">
+        <link href='{% static "./css/style.css" %}' rel="stylesheet">
+        <link href="{% static './css/custumize.css' %}" rel="stylesheet">
+
+    {% endblock head %}
+
+
+
+    <!--**********************************
+        Main wrapper start
+        ***********************************-->
+        <div id="main-wrapper">
+            {% block content %}
+
+        <!--**********************************
+            Content body start
+        ***********************************-->
+        <div class="content-body" dir="rtl">
+            <div class="container-fluid">
+				
+				<div class="row page-titles">
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item active"><a href="javascript:void(0)">Table</a></li>
+						<li class="breadcrumb-item"><a href="javascript:void(0)">Datatable</a></li>
+					</ol>
+                </div>
+                <!-- row -->
+
+
+                <div class="row">
+
+					<div class="col-12 farsi">
+                        <div class="card farsi">
+                            <div class="card-header farsi" dir="rtl">
+                                <h4 class="card-title">مجموعه سوالات</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive" dir="rtl">
+                                    <table dir="rtl" id="example3"  class="display" style="min-width: 845px;float: right;">
+                                        <thead dir="rtl">
+                                            <tr>
+                                                <!-- <th></th> -->
+                                                <th style="text-align: center;">شماره</th>
+                                                <th style="text-align: center;">  نام آزمون  </th>
+                                                <th style="text-align: center;">نام درس</th>
+                                                <th style="text-align: center;">طراح</th>
+                                                <th style="text-align: center;">تعداد سوال</th>
+                                                <th style="text-align: center;">تاریخ  طرح سوال</th>
+                                                <th style="text-align: center;">تاریخ اصلاح سوال</th>
+                                                <th style="text-align: center;">وضعیت</th>
+                                                <th style="text-align: center;">ویرایش</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            
+                                            {% for quiz in quiz_list %}
+                                                <tr>
+                                                    <!-- <td><img class="rounded-circle" width="35" src="images/profile/small/pic1.jpg" alt=""></td> -->
+                                                    <td style="text-align: center;" >{{forloop.counter}}</td>
+                                                    <td style="text-align: center;" >{{ quiz.name }}</td>
+                                                    <td style="text-align: center;"><b>{{ quiz.lesson.name }}</b></td>
+                                                    <td style="text-align: center;">{{ quiz.quiz_maker.username }}</td>
+                                                    <td style="text-align: center;">{{quiz.questions.count}}</td>
+                                                    <td style="text-align: center;"><a href="javascript:void(0);"><strong dir="rtl">{{ quiz.j_datetime_created }}</strong></a></td>
+                                                    <td style="text-align: center;"><a href="javascript:void(0);"><strong dir="rtl">{{ quiz.j_datetime_edited }}</strong></a></td>
+                                                    <td style="text-align: center;"><span class="badge light badge-danger">Udpaid</span></td>
+                                                    <td>
+                                                        <div class="d-flex" dir="ltr">
+                                                            <button onclick="deleteQuiz('{{quiz.question.id}}')"
+                                                                class="btn btn-danger shadow btn-xs sharp me-1" id="delete_button"
+                                                                data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
+                                                                <i class="fa fa-trash"></i>
+                                                            </button>
+                                                            <a href="{% url 'quiz_detail' quiz.id %}" class="btn btn-info shadow btn-xs sharp me-1">
+                                                                <i class="fas fa-pencil-alt"></i>
+                                                            </a>
+                                                        </div>												
+                                                    </td>												
+                                                </tr>
+
+
+                                            {% endfor %}
+
+												</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+				</div>
+            </div>
+        </div>
+        <!--**********************************
+            Content body end
+        ***********************************-->
+        <form action="{% url 'quiz_delete' %}" method="POST">
+            {% csrf_token %}
+            <div class="col-xl-2 col-lg-4">
+                <div class="card" dir="rtl">
+                    <!-- <button class="btn btn-danger" type="submit" name="button-name" value="delete_question">
+                        حذف سوال 
+                    </button> -->
+                    <button type="button" class="btn btn-primary farsi" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">حذف سوال</button>
+                        <!-- Modal -->
+                        <div class="modal fade farsi" id="exampleModalCenter">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content" >
+                                    <div class="modal-header" dir="rtl">
+                                        <h5 class="modal-title"> اخطار</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" dir="rtl" style="margin-right: -4.5em;">
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>آیا از حذف  سوال اطمینان دارید ؟ </p>
+                                    </div>
+                                    <div class="modal-footer farsi">
+                                        <button type="button" class="btn btn-dark light" data-bs-dismiss="modal">لغو</button>
+                                        <button type="submit" class="btn btn-primary" name="delete_question" value="" id="delete"> حذف </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>																						
+                        <!-- <button type="button" class="btn btn-danger btn sweet-confirm sss">حذف سوال</button> -->
+                    
+                    </div>																																																																																				
+            </div>
+        </form>
+
+        {% endblock content %}
+
+        
+    </div>
+    <!--**********************************
+        Main wrapper end
+    ***********************************-->
+
+{% block required_js %}
+      <!--**********************************
+        Scripts
+    ***********************************-->
+    <!-- Required vendors -->
+    <script src="{% static './vendor/global/global.min.js' %}"></script>
+    <script src="{% static './vendor/chart.js/Chart.bundle.min.js' %}"></script>
+	<!-- Apex Chart -->
+	<script src="{% static './vendor/apexchart/apexchart.js' %}"></script>
+	
+    <!-- Datatable -->
+    <!-- <script src="{% static './vendor/datatables/js/jquery.dataTables.min.js' %}"></script> -->
+    <script src="{% static './custom/vendor/jquery.dataTables-cus.min.js' %}"></script>
+    <script src="{% static './custom/js/datatables-cus.init.js' %}"></script>
+
+	<script src="{% static 'vendor/jquery-nice-select/js/jquery.nice-select.min.js' %}"></script>
+
+    <script src="{% static './js/custom.js' %}"></script>
+	<script src="{% static './js/dlabnav-init.js' %}"></script>
+	<script src="{% static './js/demo.js' %}"></script>
+	<!-- <script src="{% static './js/layout.js' %}"></script> -->
+    <script src="{% static './js/styleSwitcher.js' %}"></script>
+    <script>
+        function deleteQuiz(quiz_id){
+        var button = document.getElementById('delete');
+
+        button.value = quiz_id;}
+    </script>
+{% endblock required_js %}

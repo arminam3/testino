@@ -1,0 +1,209 @@
+{% extends "_base.html" %}
+{% load static %}
+{% load my_tags %}
+
+{% block title %}
+  <title>ساخت پروفایل </title>
+{% endblock title %}
+
+{% block head %}
+    <!-- Custom Stylesheet -->
+	<link href="{% static './vendor/jquery-nice-select/css/nice-select.css' %}" rel="stylesheet">
+    <link href="{% static './css/style.css' %}" rel="stylesheet">
+    <link href="{% static './css/custumize.css' %}" rel="stylesheet">
+{% endblock head %}
+
+{% block content %}
+        <!--**********************************
+            Content body start
+        ***********************************-->
+        <div class="content-body farsi" dir="rtl">
+            <div class="container-fluid">
+                <div class="row page-titles">
+                    <ol class="breadcrumb" dir="rtl" style="text-align: right;">
+                        <li class="breadcrumb-item active"><a href="">حساب کاربری </a></li>
+                        <li class=""><a href="">
+                            <span class="text-primary">&nbsp; / </span>
+                            ساخت پروفایل 
+                        </a></li>
+                        <!-- <li class="breadcrumb-item"><a href=""></a></li> -->
+                        <!-- <li class=""><a href="">طراح سوالات : {{quiz.quiz_maker}}</a></li> -->
+                    </ol>
+                </div>
+                <!-- row -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">برای استفاده از سامانه اطلاعات موارد زیر را تکمیل کنید : </h4>
+                            </div>
+                            <div class="card-body">
+                                {% include "message.html" %}
+                                <div class="form-validation">
+                                    <form class="needs-validation" novalidate method="POST" >
+                                        {% csrf_token %}
+                                        <div class="row">
+                                            <div class="col-xl-6">
+                                                <div class="mb-3 row">
+                                                    <label class="col-lg-4 col-form-label" for="validationCustom01">نام :
+                                                        <span class="text-danger">*</span>
+                                                    </label>
+                                                    <div class="col-lg-6">
+														<input type="text" class="form-control" id="validationCustom01"  value="{{user_entries.first_name}}"  name="first_name" required>
+														<div class="invalid-feedback">
+															
+														</div>
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3 row">
+                                                    <label class="col-lg-4 col-form-label" for="validationCustom01"> نام خانوادگی : 
+                                                        <span class="text-danger">*</span>
+                                                    </label>
+                                                    <div class="col-lg-6">
+														<input type="text" class="form-control" id="validationCustom01"  value="{{user_entries.last_name}}"  name="last_name" required>
+														<div class="invalid-feedback">
+															
+														</div>
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3 row">
+                                                    <label class="col-lg-4 col-form-label" for="validationCustom02">ایمیل : <span
+                                                            class="text-danger">*</span>
+                                                    </label>
+                                                    <div class="col-lg-6">
+                                                        <input type="email" class="form-control" id="validationCustom02"  value="{{user_entries.email}}" name="email" required>
+														<div class="invalid-feedback">
+															
+														</div>
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3 row">
+                                                    <label class="col-lg-4 col-form-label" for="validationCustom05">جنسیت : 
+                                                        <span class="text-danger">*</span>
+                                                    </label>
+                                                    <div class="col-lg-6">
+                                                        <select class="default-select wide form-control" id="validationCustom05" name="gender" style="text-align: right;border-color: red;"> <!-- text align = right -->
+                                                            <option  data-display="{{user.profile.get_gender_display}}"
+                                                            >انتخاب کنید</option>
+                                                            <option value="1">آقا</option>
+                                                            <option value="2">خانم</option>
+                                                        </select>
+                                                        <div class="invalid-feedback">
+                                                            
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-6">
+
+                                                <div class="mb-3 row">
+                                                    <label class="col-lg-4 col-form-label" for="phone_number">تلفن همراه : 
+                                                        <span class="text-danger">*</span>
+                                                    </label>
+                                                    <div class="col-lg-4">
+                                                        <input type="text" maxlength="11" minlength="11" class="form-control" id="phone_number" value="{{user.profile.phone_number}}" name="phone_number" required>
+                                                        <!-- <input type="text" class="form-control" id="validationCustom08" value="6789 345 0912" name="phone_number" required> -->
+														<div class="invalid-feedback">
+
+														</div>
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <button type="button" onclick="send_code()" class="btn btn-primary btn-block">ارسال کد تایید</button>
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3 row">
+                                                    <label class="col-lg-4 col-form-label" for="validationCustom08">کد تایید 
+                                                        <span class="text-danger">*</span>
+                                                    </label>
+                                                    <div class="col-lg-4">
+                                                        <input type="text" maxlength="11" minlength="11" class="form-control" id="validationCustom08" value="" name="user_code" required>
+                                                        <!-- <input type="text" class="form-control" id="validationCustom08" value="6789 345 0912" name="phone_number" required> -->
+														<div class="invalid-feedback">
+
+														</div>
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <span class="btn btn-primary btn-block"> کد تایید</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="mb-3 row">
+                                                    <label class="col-lg-4 col-form-label" for="id_term">ترم : <span
+                                                        class="text-danger">*</span>
+                                                    </label>
+                                                    <div class="col-lg-6">
+                                                        <input type="number" class="form-control" id="id_term" value="{{user.profile.term}}" name="term" required>
+														<div class="invalid-feedback">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3 row">
+                                                    <label class="col-lg-4 col-form-label" for="validationCustom05">رشته تحصیلی : 
+                                                        <span class="text-danger">*</span>
+                                                    </label>
+                                                    <div class="col-lg-6">
+                                                        <select class="default-select wide form-control" id="validationCustom05" name="discipline" style="text-align: right;"> <!-- text align = right -->
+                                                            <option  data-display="{{user.profile.get_discipline_display}}">انتخاب کنید</option>
+                                                            <option value="1">پزشکی</option>
+                                                            <option value="2">پرستاری</option>
+                                                        </select>
+                                                        <div class="invalid-feedback">
+                                                            
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="mb-3 row">
+                                                    <div class="col-lg-8 ms-auto">&nbsp;</div>
+                                                    <div class="col-lg-4 ms-auto">&nbsp;</div>
+                                                </div>
+                                                <div class="mb-3 row" dir="ltr">
+                                                    <div class="col-lg-6 ms-auto"></div>
+                                                    <div class="col-lg-9 ms-auto">
+                                                        <button type="submit" class="btn btn-secondary">ثبت اطلاعات</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!--**********************************
+            Content body end
+        ***********************************-->  
+{% endblock content %}
+
+{% block required_js %}
+        <!-- Required vendors -->
+        <script src="{% static './vendor/global/global.min.js' %}"></script>
+        <script src="{% static './vendor/jquery-nice-select/js/jquery.nice-select.min.js' %}"></script>
+
+        <script src="{% static './js/custom.js' %}"></script>
+        <script src="{% static './js/dlabnav-init.js' %}"></script>
+        <script src="{% static './js/demo.js' %}"></script>
+        <script src="{% static './js/styleSwitcher.js' %}"></script>
+
+        <script>
+            var send_code = function() {
+            const phone_number = document.getElementById('phone_number').value;
+            fetch(`{% url 'profile_create' %}?phone_number=${phone_number}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        window.location.href ='{% url "profile_create" %}'
+                    } 
+                })
+        
+        }
+        
+        </script>
+        
+
+
+{% endblock required_js %}

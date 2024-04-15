@@ -1,0 +1,203 @@
+{% extends "_base.html" %}
+{% load static %}
+{% load my_tags %}
+
+{% block title %}
+  <title>question update</title>
+{% endblock title %}
+
+
+{% block head %}
+<link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.png' %}" />
+
+<!-- FAVICONS ICON -->
+<link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.png' %}" />
+<!-- Form step -->
+<link href="{% static './vendor/jquery-smartwizard/dist/css/smart_wizard.min.css' %}" rel="stylesheet">
+<!-- Custom Stylesheet -->
+<link href="{% static './vendor/jquery-nice-select/css/nice-select.css' %}" rel="stylesheet">
+<link href="{% static './css/style.css' %}" rel="stylesheet">
+<link href="{% static './css/custumize.css' %}" rel="stylesheet">
+{% endblock head %}
+
+
+{% block content %}
+<div class="content-body">
+    <div class="container-fluid " dir="rtl">
+        <div class="row">
+            <div class="col-xl-12 col-lg-12 farsi"  style="font-size: medium ;">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title farsi">ویرایش سوال</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="basic-form">
+                            <form  action="{% url 'question_update' question.id %}" enctype="multipart/form-data" method="POST">
+                                {% csrf_token %}
+                                <div class="mb-1 row">
+                                    <label class="col-sm-3 col-form-label" >متن سوال</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" value="{{question.text}}" placeholder="متن سوال را اضافه کنید" required name="text">
+                                    </div>
+                                </div>
+                                <div class="mb-1 row">
+                                    <label class="col-sm-3 col-form-label">گزینه اول </label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" name="choice_1" required value="{{question.choice_1}}">
+                                    </div>
+                                </div>
+                                <div class="mb-1 row">
+                                    <label class="col-sm-3 col-form-label">گزینه دوم</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" name="choice_2" required value="{{question.choice_2}}">
+                                    </div>
+                                </div>
+                                <div class="mb-1 row">
+                                    <label class="col-sm-3 col-form-label">گزینه سوم</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" name="choice_3" required value="{{question.choice_3}}">
+                                    </div>
+                                </div>
+                                <div class="mb-1 row">
+                                    <label class="col-sm-3 col-form-label">گزینه چهارم</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" name="choice_4" required value="{{question.choice_4}}">
+                                    </div>
+                                </div>
+
+                                <fieldset class="mb-3">
+                                    <div class="row">
+                                        <label class="col-form-label col-sm-3 pt-0">پاسخ</label>
+                                        <div class="col-sm-9">
+                                            <div class="col-sm-3">
+                                                <div class="form-check">
+                                                    <input class="form-check-input rtl-choice-cus" type="radio"
+                                                    {% if question.answer == '1' %}
+                                                      checked
+                                                    {% endif %}
+                                                    name="answer" value="1"  required>
+                                                    <label class="form-check-label">
+                                                        {{1|e2fnum}}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="form-check">
+                                                    <input class="form-check-input rtl-choice-cus" type="radio"
+                                                    {% if question.answer == '2' %}
+                                                      checked
+                                                    {% endif %}
+                                                    name="answer" value="2"  required>
+                                                    <label class="form-check-label">
+                                                        {{2|e2fnum}}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="form-check">
+                                                    <input class="form-check-input rtl-choice-cus" type="radio"
+                                                    {% if question.answer == '3' %}
+                                                      checked
+                                                    {% endif %}
+                                                    name="answer" value="3"  required>
+                                                    <label class="form-check-label">
+                                                        {{3|e2fnum}}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="form-check">
+                                                    <input class="form-check-input rtl-choice-cus" type="radio"
+                                                    {% if question.answer == '4' %}
+                                                      checked
+                                                    {% endif %}
+                                                    name="answer" value="4"  required>
+                                                    <label class="form-check-label">
+                                                        {{4|e2fnum}}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <label class="col-form-label col-sm-3 pt-0 farsi">تصویر</label>
+                                        <div class="col-sm-9">
+                                            <div class="input-group custom_file_input">
+                                                <div class="form-file">
+                                                    <input type="file" class="form-file-input form-control" name="image">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <div class="mb-3 row">
+
+                                    <div class="col-sm-3">
+                                    {% if question.image %}
+                                    <b>
+                                        <a href="{{question.image.url}}" class="text-primary farsi">
+                                            مشاهده تصویر
+                                        </a>
+                                    </b>
+                                </div>
+                                <div class="col-sm-9">
+                                    <div class="form-check">
+                                        <input class="form-check-input" style="float: right;" type="checkbox" name="delete_image">
+                                        <label class="form-check-label" style="margin-right: 1.5em;">
+                                            حذف تصویر    
+                                        </label>
+                                    </div>
+                                </div>
+                                {% endif %}
+                                </div>
+                                <div class="mb-3 row">
+                                    <label class="col-lg-4 col-form-label farsi" for="validationCustom04">توضیحات 
+                                        <!-- <span class="text-danger">*</span> -->
+                                    </label>
+                                    <div class="col-lg-8">
+                                        <textarea class="form-control" id="validationCustom04" rows="5" name="explanation " placeholder="افزودن توضیحات" >{{question.explanation}}
+                                        </textarea>
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <div class="col-sm-10">
+                                        <button type="submit" class="btn btn-primary ">ثبت سوال</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+        
+{% endblock content %}
+
+
+{% block required_js %}
+<script src="{% static './vendor/global/global.min.js' %}"></script>
+<script src="{% static './vendor/jquery-steps/build/jquery.steps.min.js' %}"></script>
+<script src="{% static './vendor/jquery-validation/jquery.validate.min.js' %}"></script>
+<!-- Form validate init -->
+<script src="{% static './js/plugins-init/jquery.validate-init.js' %}"></script>
+
+
+<!-- Form Steps -->
+<script src="{% static './vendor/jquery-smartwizard/dist/js/jquery.smartWizard.js' %}"></script>
+<script src="{% static 'vendor/jquery-nice-select/js/jquery.nice-select.min.js' %}"></script>
+
+<script src="{% static './js/custom.js' %}"></script>
+<script src="{% static './js/dlabnav-init.js' %}"></script>
+<script src="{% static './js/demo.js' %}"></script>
+<script src="{% static './js/styleSwitcher.js' %}"></script>
+<script>
+$(document).ready(function(){
+    // SmartWizard initialize
+    $('#smartwizard').smartWizard(); 
+});
+</script>
+{% endblock required_js %}

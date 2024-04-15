@@ -1,0 +1,99 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en" class="h-100">
+
+<head>
+        <meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="keywords" content="" />
+	<meta name="author" content="" />
+	<meta name="robots" content="" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="GetSkills  : GetSkills Online Learning Admin Bootstrap 5 Template" />
+	<meta property="og:title" content="GetSkills  : GetSkills Online Learning  Admin Bootstrap 5 Template" />
+	<meta property="og:description" content="GetSkills  : GetSkills Online Learning  Admin Bootstrap 5 Template" />
+	<meta property="og:image" content="https://getskills.dexignzone.com/xhtml/social-image.png" />
+	<meta name="format-detection" content="telephone=no">
+	
+	<!-- PAGE TITLE HERE -->
+	<title>صفحه ورود</title>
+	
+	<!-- FAVICONS ICON -->
+	<link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.png' %}" />
+    <link href="{% static './css/style.css' %}" rel="stylesheet">
+    <link href="{% static './css/custumize.css' %}" rel="stylesheet">
+
+
+</head>
+
+<!-- <body class="body  h-100" 
+ style="background-image: url({% static 'images/bg-1.jpg' %}); background-size:cover;"
+> -->
+<body class="body  h-100" ></body>
+    <div class="container h-100">
+		<div class="row h-100 align-items-center justify-contain-center farsi" dir="rtl">
+			<div class="col-xl-12 mt-3">
+				<div class="card">
+					<div class="card-body p-0">
+						<div class="row m-0">
+							<div class="col-xl-6 col-md-6 sign text-center">
+								<div>
+									<div class="text-center my-5">
+										<a href="index.html"><img width="200" src="{% static 'images/logo-full.png' %}" alt=""></a>
+									</div>
+									<img src="{% static 'images/log.png' %}" class="education-img"></img>
+								</div>	
+							</div>
+							<div class="col-xl-6 col-md-6">
+								<div class="sign-in-your">
+									<h4 class="fs-20 font-w800 text-black">وارد حساب کاربری شوید</h4>
+									<span>خوش آمدید . کد ملی و شماره دانشجویی خود را وارد کنید و وارد شوید<br> 
+                                    </span>
+									<div class="login-social">
+										<!-- <a href="javascript:void(0);" class="btn font-w800 d-block my-4"><i class="fab fa-google me-2 text-primary"></i>Login with Google</a>
+										<a href="javascript:void(0);" class="btn font-w800 d-block my-4"><i class="fab fa-facebook-f me-2 facebook-log"></i>Login with Facebook</a> -->
+									</div>
+									<form action="{% url 'login' %}" method="POST">
+                                        {% csrf_token %}
+										<div class="mb-3">
+											<label class="mb-1"><strong>کد ملی</strong></label>
+											<input type="text" name="username" class="form-control" id="id_username">
+										</div>
+										<div class="mb-3">
+											<label class="mb-1"><strong>شماره دانشجویی</strong></label>
+											<input type="password" name="password" class="form-control" id="id_password">
+										</div>
+										<div class="row d-flex justify-content-between mt-4 mb-2">
+											<div class="mb-3">
+											</div>
+											<div class="mb-3 farsi"  >
+												<a href="{% url 'check_code' %}" style="font-size: small;" >فراموشی رمز عبور</a><br><br>
+                                                <a href="{% url 'register' %}" class="text-primary"><b>ثبت نام</b></a>
+                                                کنید
+											</div>
+										</div>
+										<div class="text-center">
+											<button type="submit" class="btn btn-primary btn-block">ورود</button>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+    <!--**********************************
+        Scripts
+    ***********************************-->
+    <!-- Required vendors -->
+    <script src="{% static './vendor/global/global.min.js' %}"></script>
+    <script src="{% static './js/custom.js' %}"></script>
+    <script src="{% static './js/dlabnav-init.js' %}"></script>
+	<script src="{% static './js/styleSwitcher.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,283 @@
+{% extends "_base.html" %}
+{% load static %}
+{% load my_tags %}
+
+	
+	{% block title %}
+	<!-- PAGE TITLE HERE -->
+	<title>Quiz Detail</title>
+	{% endblock title %}
+	
+
+	{% block head %}
+	<link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.png' %}" />
+
+	<!-- FAVICONS ICON -->
+	<link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.png' %}" />
+    <!-- Form step -->
+    <link href="{% static './vendor/jquery-smartwizard/dist/css/smart_wizard.min.css' %}" rel="stylesheet">
+    <!-- Custom Stylesheet -->
+	<link href="{% static './vendor/jquery-nice-select/css/nice-select.css' %}" rel="stylesheet">
+    <link href="{% static './css/style.css' %}" rel="stylesheet">
+    <link href="{% static './css/custumize.css' %}" rel="stylesheet">
+
+	{% endblock head %}
+
+
+    <!--**********************************
+        Main wrapper start
+    ***********************************-->
+    <div id="main-wrapper">
+                    
+
+    {% block content %}
+        <!--**********************************
+            Content body start
+        ***********************************-->
+        <div class="content-body farsi">
+            <div class="container-fluid " dir="rtl">
+                <div class="row page-titles">
+                    <ol class="breadcrumb" dir="rtl" style="text-align: right;">
+                        <li class="breadcrumb-item active"><a href="">نتایج آزمون ها </a></li>
+                        <li class=""><a href="">
+                            <span class="text-primary">&nbsp; / </span>
+                            ترم {{quiz_his.quiz.lesson.term|e2fnum}}
+                        </a></li>
+                        <!-- <li class="breadcrumb-item"><a href=""></a></li> -->
+                        <li class="breadcrumb-item"><a href="">
+							<span class="text-primary">&nbsp; / </span>
+							{{quiz_his.quiz.name}}</a></li>
+                    </ol>
+                </div>
+               
+
+				<!-- *****************************
+					radi button start
+				***************************** -->
+				<!-- <form class="farsi"> -->
+					<form class="farsi" method="POST" data-netlify="true"
+						 enctype="multipart/form-data" action="">
+						<div class="row">
+						{% for quiz_history in quiz_histories %}		
+							{% csrf_token %}
+							<div class="col-xl-6 col-lg-6" >
+									<div class="card" dir="">
+										<div class="card-header 
+                                        {% if quiz_history.question.answer != quiz_history.user_answer %}
+                                            bg-primary-cus
+                                        {% else %}
+                                            bg-success-cus
+                                        {% endif %}
+                                        " >
+											<h4 class="card-title
+                                             {% if quiz_history.question.answer != quiz_history.user_answer %}
+                                                text-white
+                                             {% endif %} 
+                                             col-12" dir="rtl">
+                                                {% if quiz_history.question.explanation.strip %}
+                                                    <span type="button" class="badge  badge-secondary" title="توضیحات"
+                                                        data-bs-placement="left" data-bs-content="{{quiz_history.question.explanation}}" data-bs-toggle="popover">
+                                                    {{forloop.counter|e2fnum}} 
+                                                    </span> 
+                                                {% else %}
+                                                    <span class="badge  badge-primary">
+                                                    {{forloop.counter|e2fnum}}
+                                                    </span> 
+                                                {% endif %}
+												{{quiz_history.question.text}}</h4>
+												<!-- modal -->
+                                                <!-- <span 
+                                                type="" class="badge  badge-primary "
+                                                data-bs-toggle="popover" data-bs-placement="left" data-bs-content=""
+                                                title="Popover in Left"
+                                                >{{forloop.counter|e2fnum}}</span> -->
+
+											<div class="basic-form col-3">
+												
+												
+											</div>
+										</div>
+										<div class="card-body">
+											<div class="basic-form">
+													<div class="row">
+														<div class="col-xl-4 col-xxl-12 col-12">
+															<div class="form-check  form-check-cus custom-checkbox mb-0 checkbox-info " style="font-size: small;">
+																<!-- <div class="row"> -->
+																	<!-- <input  type="text" value="" class="form-check-input form-check-input-cus" id="customRadioBox3" name="optradioCustom"> -->
+																	<span class="form-check-input   left-forced-cus" > ۱ ) </span>
+                                                                    <label class="form-check-label form-check-label-cus  
+                                                                    {% if quiz_history.question.answer == '1' %}
+                                                                    btn-success-rounded-cus
+                                                                    {% endif %}
+                                                                    {% if quiz_history.user_answer == '1' %}
+                                                                    {% if quiz_history.question.answer != '1' %}
+                                                                      
+                                                                    btn-danger-rounded-cus
+                                                                    {% endif %}
+                                                                    {% endif %}
+                                                                    " for="customRadioBox3"  style="text-align: justifyp;">{{quiz_history.question.choice_1}}</label>
+                                                                    <!-- </div> -->
+															</div>
+														</div>
+														<div class="col-xl-4 col-xxl-12 col-12">
+															<div class="form-check  form-check-cus custom-checkbox mb-0 checkbox-info ">
+																<!-- <input  type="radio" class="form-check-input form-check-input-cus" id="customRadioBox3" name="optradioCustom"> -->
+																<span class="form-check-input   left-forced-cus" > ۲ ) </span>
+																<label class="form-check-label form-check-label-cus  
+                                                                {% if quiz_history.question.answer == '2' %}
+                                                                btn-success-rounded-cus
+                                                                {% endif %}
+                                                                {% if quiz_history.user_answer == '2' %}
+                                                                {% if quiz_history.question.answer != '2' %}
+                                                                  
+                                                                btn-danger-rounded-cus
+                                                                {% endif %}
+                                                                {% endif %}
+                                                                " for="customRadioBox3" >{{quiz_history.question.choice_2}}</label>
+															</div>
+														</div>
+														<div class="col-xl-4 col-xxl-12 col-12">
+															<div class="form-check  form-check-cus custom-checkbox mb-0 checkbox-info ">
+																<!-- <input  type="radio" class="form-check-input form-check-input-cus" id="customRadioBox3" name="optradioCustom"> -->
+																<span class="form-check-input   left-forced-cus" > ۳ ) </span>
+                                                                <label class="form-check-label form-check-label-cus  
+                                                                {% if quiz_history.question.answer == '3' %}
+                                                                btn-success-rounded-cus
+                                                                {% endif %}
+                                                                {% if quiz_history.user_answer == '3' %}
+                                                                {% if quiz_history.question.answer != '3' %}
+                                                                  
+                                                                btn-danger-rounded-cus
+                                                                {% endif %}
+                                                                {% endif %}
+                                                                " for="customRadioBox3" >{{quiz_history.question.choice_2}} </label>
+                                                            </div>
+														</div>
+														<div class="col-xl-4 col-xxl-12 col-12">
+															<div class="form-check  form-check-cus custom-checkbox mb-0 checkbox-info ">
+																<!-- <input  type="radio" class="form-check-input form-check-input-cus" id="customRadioBox3" name="optradioCustom"> -->
+																<span class="form-check-input   left-forced-cus" > ۴ ) </span>
+                                                                <label class="form-check-label form-check-label-cus  
+                                                                {% if quiz_history.question.answer == '4' %}
+                                                                btn-success-rounded-cus
+                                                                {% endif %}
+                                                                {% if quiz_history.user_answer == '4' %}
+                                                                {% if quiz_history.question.answer != '4' %}
+                                                                  
+                                                                btn-danger-rounded-cus
+                                                                {% endif %}
+                                                                {% endif %}
+                                                                " for="customRadioBox3" >{{quiz_history.question.choice_4}}</label>
+                                                            </div>
+														</div>
+													</div>
+											</div>
+											<!-- </form> -->
+										</div>
+									</div>
+							</div>
+						{% endfor %}
+
+						<div>
+						<div class="col-xl-2 col-lg-4">
+							<div class="card" dir="rtl">
+								<!-- <button type="button" name="delete_question" class="btn btn-primary farsi" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">حذف سوال</button> -->
+									<!-- Modal -->
+									<div class="modal fade farsi" id="exampleModalCenter">
+										<div class="modal-dialog modal-dialog-centered" role="document">
+											<div class="modal-content" >
+												<div class="modal-header" dir="rtl">
+													<h5 class="modal-title"> اخطار</h5>
+													<button type="button" class="btn-close" data-bs-dismiss="modal" dir="rtl" style="margin-right: -4.5em;">
+													</button>
+												</div>
+												<div class="modal-body">
+													<p>آیا از حذف  سوال اطمینان دارید ؟ </p>
+												</div>
+												<div class="modal-footer farsi">
+													<button type="button" class="btn btn-dark light" data-bs-dismiss="modal">لغو</button>
+													<button type="submit" class="btn btn-primary" name="delete_question" value="" id="delete"> حذف </button>
+												</div>
+											</div>
+										</div>
+								</div>																						
+								
+							</div>																																																																																				
+						</div></div>
+						
+						
+					</div>
+					<div class="row">
+						<div class="col-xl-4 col-lg-4"></div>
+						<div class="col-xl-4 col-lg-4">
+							<div class="card " dir="rtl">
+								<a href="{% url 'term_quiz_list' %}" type="submit" class="btn btn-primary" >بانک سوالات</a>
+							</div>
+						</div>	
+						<div class="col-xl-4 col-lg-4"></div>
+					</div>
+				</div>
+			</form>
+			<!-- *****************************
+				radi button end
+				***************************** -->
+			</div>
+		</div>
+		
+        <!--**********************************
+            Content body end
+			***********************************-->
+			
+			
+    {% endblock content %}
+
+
+
+
+        
+    </div>
+    <!--**********************************
+        Main wrapper end
+    ***********************************-->
+
+	
+    
+    <!--**********************************
+        Scripts
+        ***********************************-->
+	{% block required_js %}
+	<!-- {{ block.super }} -->
+        <!-- Required vendors -->
+	<script src="{% static './vendor/global/global.min.js' %}"></script>
+		<!--  -->
+	<script src="{% static './vendor/jquery-steps/build/jquery.steps.min.js' %}"></script>
+    <script src="{% static './vendor/jquery-validation/jquery.validate.min.js' %}"></script>
+    <!-- Form validate init -->
+    <script src="{% static './js/plugins-init/jquery.validate-init.js' %}"></script>
+
+
+	<!-- Form Steps -->
+	<script src="{% static './vendor/jquery-smartwizard/dist/js/jquery.smartWizard.js' %}"></script>
+	<script src="{% static 'vendor/jquery-nice-select/js/jquery.nice-select.min.js' %}"></script>
+	
+	<script src="{% static './js/custom.js' %}"></script>
+	<script src="{% static './js/dlabnav-init.js' %}"></script>
+	<script src="{% static './js/demo.js' %}"></script>
+    <script src="{% static './js/styleSwitcher.js' %}"></script>
+	<script>
+        $(document).ready(function(){
+            // SmartWizard initialize
+			$('#smartwizard').smartWizard(); 
+		});
+	</script>
+	<script>
+		function deleteQuiz(quiz_id){
+		var button = document.getElementById('delete');
+
+		button.value = quiz_id;}
+	</script>
+    {% endblock required_js %}
+
+
+
+</html>

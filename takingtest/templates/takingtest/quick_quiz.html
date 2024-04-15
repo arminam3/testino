@@ -1,0 +1,245 @@
+{% extends "_base.html" %}
+{% load static %}
+{% load my_tags %}
+
+	
+	{% block title %}
+	<!-- PAGE TITLE HERE -->
+	<title>Quiz Detail</title>
+	{% endblock title %}
+	
+
+	{% block head %}
+	<link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.png' %}" />
+
+	<!-- FAVICONS ICON -->
+	<link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.png' %}" />
+    <!-- Form step -->
+    <link href="{% static './vendor/jquery-smartwizard/dist/css/smart_wizard.min.css' %}" rel="stylesheet">
+    <!-- Custom Stylesheet -->
+	<link href="{% static './vendor/jquery-nice-select/css/nice-select.css' %}" rel="stylesheet">
+    <link href="{% static './css/style.css' %}" rel="stylesheet">
+    <link href="{% static './css/custumize.css' %}" rel="stylesheet">
+
+	{% endblock head %}
+
+
+    <!--**********************************
+        Main wrapper start
+    ***********************************-->
+    <div id="main-wrapper">
+                    
+
+    {% block content %}
+        <!--**********************************
+            Content body start
+        ***********************************-->
+        <div class="content-body">
+            <div class="container-fluid " dir="rtl">
+				<div class="row page-titles">
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item active"><a href="javascript:void(0)">Home</a></li>
+						<li class="breadcrumb-item"><a href="javascript:void(0)">Components</a></li>
+					</ol>
+                </div>
+               
+
+				<!-- *****************************
+					radi button start
+				***************************** -->
+				<!-- <form class="farsi"> -->
+					<!-- <form class="farsi" method="POST" data-netlify="true" -->
+						 <!-- enctype="multipart/form-data" action=""> -->
+						<div class="row farsi" >
+						{% for question in quiz.questions.all %}		
+							{% csrf_token %}
+							<div class="col-xl-6 col-lg-6" >
+									<div class="card" dir="">
+										<div class="card-header  " style="margin-right: 1em;" >
+											<h4 class="card-title col-12 row">
+												<span style="height: 2.3em;" href="" class="badge  badge-primary col-1 badge-cus" >
+												{{forloop.counter|e2fnum}}
+                                                
+												</span> 
+                                                <span class="col-11 title-cus">
+												{{question.text}}
+                                                </span>
+                                            </h4>
+												<!-- modal -->
+
+											<div class="basic-form col-3">
+												<!-- <form class="farsi"> -->
+													
+												<!-- </form> -->
+												
+											</div>
+										</div>
+										<div class="card-body">
+											<div class="basic-form">
+													<div class="row">
+														<div class="col-xl-4 col-xxl-12 col-12">
+															<div class="form-check  form-check-cus custom-checkbox mb-0 checkbox-info " >
+																<!-- <div class="row"> -->
+																	<!-- <input  type="text" value="" class="form-check-input form-check-input-cus" id="customRadioBox3" name="optradioCustom"> -->
+																	<span class="form-check-input   left-forced-cus"> ۱ ) </span>
+																	<label class="form-check-label form-check-label-cus" style="color: inherit;text-align: justify;" for="customRadioBox3" id="correct-selecting-{{question.id}}-1"> {{question.choice_1}}</label>
+																<!-- </div> -->
+															</div>
+														</div>
+														<div class="col-xl-4 col-xxl-12 col-12">
+															<div class="form-check  form-check-cus custom-checkbox mb-0 checkbox-info ">
+																<!-- <input  type="radio" class="form-check-input form-check-input-cus" id="customRadioBox3" name="optradioCustom"> -->
+																<span class="form-check-input   left-forced-cus" > ۲ ) </span>
+																<label class="form-check-label form-check-label-cus"  style="color: inherit;text-align: justify;" id="correct-selecting-{{question.id}}-2" for="customRadioBox3" >{{question.choice_2}}</label>
+															</div>
+														</div>
+														<div class="col-xl-4 col-xxl-12 col-12">
+															<div class="form-check  form-check-cus custom-checkbox mb-0 checkbox-info ">
+																<!-- <input  type="radio" class="form-check-input form-check-input-cus" id="customRadioBox3" name="optradioCustom"> -->
+																<span class="form-check-input   left-forced-cus" > ۳ ) </span>
+																<label class="form-check-label form-check-label-cus "  style="color: inherit;text-align: justify;" id="correct-selecting-{{question.id}}-3" for="customRadioBox3" >{{question.choice_3}}</label>
+															</div>
+														</div>
+														<div class="col-xl-4 col-xxl-12 col-12">
+															<div class="form-check  form-check-cus custom-checkbox mb-0 checkbox-info ">
+																<!-- <input  type="radio" class="form-check-input form-check-input-cus" id="customRadioBox3" name="optradioCustom"> -->
+																<span class="form-check-input  left-forced-cus" > ۴ ) </span>
+																<label class="form-check-label form-check-label-cus "  style="color: inherit;text-align: justify;margin-bottom: 3rem;" id="correct-selecting-{{question.id}}-4" for="customRadioBox3" >{{question.choice_4}}</label>
+																<span>&nbsp; </span>
+															</div>
+														</div>
+													</div>
+											</div>
+											<!-- </form> -->
+                                            <div class="row" >
+                                            <div class="col-4"></div>
+                                            <div class="col-4">
+    
+                                                <button class="btn btn-info" style="vertical-align: bottom;position: absolute;margin-bottom: 0em;margin-top: 2em;bottom: 2em;" onclick="colorChangeBtn('{{question.id}}','{{question.answer}}')">مشاهده پاسخ</button>
+                                            </div>
+                                            <div class="col-4">
+
+                                            </div>
+                                            </div>
+                                        <!-- Accordination - START  --> 
+                                        {% if question.explanation %}
+                                          
+                                         <div class="col-xl-12">                                                
+                                            <div class="accordion accordion-with-icon farsi" id="accordion-">
+                                                <div class="accordion-item">
+                                                    <button type="button" class="accordion-header collapsed rounded-lg bg-secondary" id="accordion"
+                                                        data-bs-toggle="collapse" data-bs-target="#l-{{forloop.counter}}" aria-controls="collapse"  
+                                                        aria-expanded="true"  role="button" onclick="selectCorrectAnswer()">
+                                                        <span class="accordion-header-indicator"></span>
+                                                        <span class="accordion-header-text" style="margin-right: 1em;"> توضیحات سوال</span>
+                                                        <span class="accordion-header-icon"></span>
+                                                    </button>
+                                                    <div id="l-{{forloop.counter}}" class="collapse accordion__body" aria-labelledby="accord-7Two" 
+                                                        data-bs-parent="#accordion">
+                                                      <div class="accordion-body-text" style="text-align: justify;">
+                                                        {{question.explanation}}
+                                                      </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div><br><br>
+                                        {% endif %}
+
+                                        <!-- Accordination - END  -->
+										</div>
+
+
+									</div>
+							</div>
+						{% endfor %}
+
+						<div>
+						<div class="col-xl-2 col-lg-4">
+							<div class="card" dir="rtl">
+								<!-- <button type="button" name="delete_question" class="btn btn-primary farsi" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">حذف سوال</button> -->
+																						
+								
+							</div>																																																																																				
+						</div></div>
+						
+						
+					</div>
+					<div class="row farsi">
+						<div class="col-xl-4 col-lg-4"></div>
+						<div class="col-xl-4 col-lg-4">
+							<div class="card " dir="rtl">
+								<a href="{% url 'term_quiz_list' %}" class="btn btn-primary" >سایر نمونه سوالات</a href="{% url 'term_quiz_list' %}">
+							</div>
+						</div>	
+						<div class="col-xl-4 col-lg-4"></div>
+					</div>
+				</div>
+			<!-- </form> -->
+			<!-- *****************************
+				radi button end
+				***************************** -->
+			</div>
+		</div>
+		
+        <!--**********************************
+            Content body end
+			***********************************-->
+			
+			
+    {% endblock content %}
+
+
+
+
+        
+    </div>
+    <!--**********************************
+        Main wrapper end
+    ***********************************-->
+
+	
+    
+    <!--**********************************
+        Scripts
+        ***********************************-->
+	{% block required_js %}
+	<!-- {{ block.super }} -->
+        <!-- Required vendors -->
+        <script>
+    function colorChangeBtn(id, answer){
+        const label = document.getElementById(`correct-selecting-${id}-${answer}`);
+        ; // Change color to red using string interpolation
+        
+        if ('{{request.session.theme}}' == 'dark'){
+            label.classList.add("btn-success-rounded-dark-cus")
+            label.style.color ='#fafcfb'
+        } else {
+            label.classList.add("btn-success-rounded-cus")
+            label.style.color ='#fdfffdf9'
+        }
+    }
+        </script>
+	<script src="{% static './vendor/global/global.min.js' %}"></script>
+		<!--  -->
+	<script src="{% static './vendor/jquery-steps/build/jquery.steps.min.js' %}"></script>
+    <script src="{% static './vendor/jquery-validation/jquery.validate.min.js' %}"></script>
+    <!-- Form validate init -->
+    <script src="{% static './js/plugins-init/jquery.validate-init.js' %}"></script>
+
+
+	<!-- Form Steps -->
+	<script src="{% static './vendor/jquery-smartwizard/dist/js/jquery.smartWizard.js' %}"></script>
+	<script src="{% static 'vendor/jquery-nice-select/js/jquery.nice-select.min.js' %}"></script>
+	
+	<script src="{% static './js/custom.js' %}"></script>
+	<script src="{% static './js/dlabnav-init.js' %}"></script>
+	<script src="{% static './js/demo.js' %}"></script>
+    <script src="{% static './js/styleSwitcher.js' %}"></script>
+
+
+
+    {% endblock required_js %}
+
+
+
+</html>

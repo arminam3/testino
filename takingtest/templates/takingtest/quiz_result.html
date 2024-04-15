@@ -1,0 +1,130 @@
+{% load static %}
+{% load my_tags %}
+
+<!DOCTYPE html>
+<html lang="en" class="h-100">
+
+<head>
+        <meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="keywords" content="" />
+	<meta name="author" content="" />
+	<meta name="robots" content="" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="GetSkills  : GetSkills Online Learning Admin Bootstrap 5 Template" />
+	<meta property="og:title" content="GetSkills  : GetSkills Online Learning  Admin Bootstrap 5 Template" />
+	<meta property="og:description" content="GetSkills  : GetSkills Online Learning  Admin Bootstrap 5 Template" />
+	<meta property="og:image" content="https://getskills.dexignzone.com/xhtml/social-image.png" />
+	<meta name="format-detection" content="telephone=no">
+	
+	<!-- PAGE TITLE HERE -->
+	<title>Score Page</title>
+	
+	<!-- FAVICONS ICON -->
+    <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.png{% stati' %}c '' %}" />
+	<link href="{%static './vendor/jquery-nice-select/css/nice-select.css' %}" rel="stylesheet">
+    <link href="{% static './css/style.css' %}" rel="stylesheet">
+    <link href="{% static './css/custumize.css' %}" rel="stylesheet">
+    
+</head>
+
+<body class="vh-100 farsi" dir="rtl" style="background-color: #f2e3e1;">
+    <div class="authincation h-100">
+        <div class="container h-100">
+            <div class="row justify-content-center h-100 align-items-center">
+                <div class="col-md-7" style="margin-top: 5em;">
+                    <div class="form-input-content text-center error-page">
+                        <h1 class="error-text fw-bold">
+                            <div id="value">{{0|e2fnum}}</div>
+                        </h1>
+                        <h4><i class="fa-solid fa-check text-primary"></i>&nbsp;سوال را به درستی پاسخ دادید</h4>
+                        <p>
+                        <span>به</span>
+                        <span id="user_percent"> {{user_result_percent}} </span>
+                        <span>درصد از سولات پاسخ صحیح دادید</span>
+                        </p>
+						
+                    <!-- Column -->
+                    <div class="col-xl-12" style="background-color: #f2e3e1;">
+                        <div class="card">
+                            <div class="card-header d-block">
+                                <h6 class="card-title">میانگین پاسخ دهی</h4>
+                            </div>
+                            <div class="card-body">
+                                <h6> میانگین پاسخگویی :
+                                    <span class="pull-end" id="progress-cus"> {{score_avg|e2fnum}} </span>%
+                                </h6>
+                                <div class="progress ">
+                                    <div class="progress-bar progress-animated
+                                    {% if score_avg >= 75 %}
+                                        bg-success
+                                    {% elif score_avg >= 50 %}
+                                        bg-warning
+                                    {% else %}
+                                        bg-danger
+                                    {% endif %}
+                                    " style="width: {{score_avg}}%; height:6px;" role="progressbar">
+                                        <span class="sr-only"></span>
+                                    </div>
+                                </div>
+                                
+                                <!-- Column -->
+                                <div class="row" style="margin-top: 1em;">
+                                    <div class="col-md-2"></div>
+                                    <div class="col-xl-4">
+                                        <a class="btn btn-primary light" href="{% url 'taken_exam_detail' quiz_result.exam_number %}" style="margin-bottom:0.5em ;">جزئیات آزمون</a>
+                                    </div>
+                                    <div class="col-xl-4">
+                                        <a class="btn btn-secondary" href="{% url 'term_quiz_list' %}">بازگشت به صفحه ی آزمون ها</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!--**********************************
+	Scripts
+***********************************-->
+<script src="{%static './vendor/global/global.min.js' %}"></script>
+<script src="{%static './vendor/jquery-nice-select/js/jquery.nice-select.min.js' %}"></script>
+<!-- Required vendors -->
+<script src="{% static './vendor/global/global.min.js' %}"></script>
+<script src="{% static './js/custom.js' %}"></script>
+<script src="{% static './js/dlabnav-init.js' %}"></script>
+<script src="{% static './js/styleSwitcher.js' %}"></script>
+<script>
+function convertToPersianNumber(number) {
+  const persianNumbers = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+  return number.toString().replace(/\d/g, (digit) => persianNumbers[digit]);
+}
+
+function animateValue(obj, start, end, duration) {
+  let startTimestamp = null;
+  const step = (timestamp) => {
+    if (!startTimestamp) startTimestamp = timestamp;
+    const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+    
+    obj.innerHTML = convertToPersianNumber(Math.floor(progress * (end - start) + start));
+    if (progress < 1) {
+      window.requestAnimationFrame(step);
+    }
+  };
+  window.requestAnimationFrame(step);
+}
+
+const obj = document.getElementById("value");
+animateValue(obj, 0, Number('{{quiz_result.score}}'), 2000);
+const progress_cus = document.getElementById("progress-cus");
+animateValue(progress_cus, 0, Number('{{score_avg}}'), 4000);
+const user_percent = document.getElementById("user_percent");
+animateValue(user_percent, 0, Number('{{user_result_percent}}'), 4000);
+
+</script>
+</body>
+</html>
